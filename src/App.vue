@@ -2,7 +2,7 @@
   <h/>
   <div class="container">
     <balance :total="total"/>
-    <IncomeExpense/>
+    <IncomeExpense :income="+income" :expense="+expense"/>
     <TransactionList :transactions="transactions"/>
     <AddTransaction/>
   </div>
@@ -23,9 +23,29 @@ const transactions=ref([
                 {id:4, text:'biriyani', amount:-180}
             ]);
 
+//get total
 const total = computed( ()=>{
   return transactions.value.reduce((acc,transaction)=>{
     return acc+transaction.amount
   },0);
+})
+
+//get income
+
+const income=computed(()=>{
+  return transactions.value
+  .filter((transaction)=>transaction.amount>0)
+  .reduce((acc,transaction)=>{
+    return acc+transaction.amount;
+  },0).toFixed(2)
+})
+
+//get expense
+
+const expense=computed(()=>{
+  return transactions.value.filter((transaction)=>transaction.amount<0)
+  .reduce((acc,transaction)=>{
+    return acc+transaction.amount;
+  },0).toFixed(2);
 })
 </script>
