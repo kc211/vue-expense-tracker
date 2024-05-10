@@ -1,14 +1,19 @@
 <script>
 import h from './components/h.vue'
+import Balance from './components/Balance.vue';
 export default{
   components:{
-    h
+    h,
+    Balance
   }
 }
 </script>
 
 
 <template>
-  my app
+  
   <h/>
+  <div class="container">
+    <balance/>
+  </div>
 </template>
