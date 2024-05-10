@@ -3,8 +3,8 @@
   <div class="container">
     <balance :total="+total"/>
     <IncomeExpense :income="+income" :expense="+expense"/>
-    <TransactionList :transactions="transactions"/>
-    <AddTransaction @transactionSubmitted="handleCustomeEvent"/>
+    <TransactionList :transactions="transactions" @TransactionDeleted="handleTransactionDelete"/>
+    <AddTransaction @transactionSubmitted="handleTransactionSubmitted"/>
   </div>
 </template>
 
@@ -15,13 +15,23 @@ import IncomeExpense from './components/IncomeExpense.vue';
 import TransactionList from './components/TransactionList.vue';
 import AddTransaction from './components/AddTransaction.vue';
 import {computed, ref} from'vue'
-
+import {useToast} from 'vue-toastification';
 const transactions=ref([
-                {id:1, text:'fiverr', amount:3000},
-                {id:2, text:'camera', amount:-980.89},
-                {id:3, text:'chegg', amount:500},
-                {id:4, text:'biriyani', amount:-180}
+                // {id:1, text:'fiverr', amount:3000},
+                // {id:2, text:'camera', amount:-980.89},
+                // {id:3, text:'chegg', amount:500},
+                // {id:4, text:'biriyani', amount:-180}
             ]);
+
+
+
+const savedTransactions = JSON.parse(localStorage.getItem('transactions'))
+
+if(savedTransactions)
+{
+  transactions.value=savedTransactions;
+}
+const toast = useToast();
 
 //get total
 const total = computed( ()=>{
@@ -49,9 +59,37 @@ const expense=computed(()=>{
   },0).toFixed(2);
 })
 
-const handleCustomeEvent =(transactionData)=>{
-  console.log(transactionData);
-  
 
+//new transaction
+
+const handleTransactionSubmitted =(transactionData)=>{
+  console.log(transactionData);
+  transactions.value.push({
+    id:generateUniqueId(),
+    text:transactionData.text,
+    amount:transactionData.amount
+  })
+  console.log(generateUniqueId());
 }
+
+toast.success('Transaction Added')
+
+const generateUniqueId=()=>{
+  return Math.floor(Math.random()*100000)
+}
+
+
+
+//delete a transaction
+
+const handleTransactionDelete=(id)=>{
+  console.log(id);
+  transactions.value= transactions.value.filter((transaction)=>
+transaction.id!==id);
+toast.success('Transaction Deleted')
+  
+};
+
+
+
 </script>

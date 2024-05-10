@@ -22,7 +22,7 @@ import {useToast} from 'vue-toastification'
 
 const text= ref('');
 const amount = ref('');
-const emit=defineEmits('transactionSubmitted');
+const emit=defineEmits(['transactionSubmitted']);
 const toast = useToast();
 const Onsubmit= ()=>{
 
