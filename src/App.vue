@@ -1,10 +1,10 @@
 <template>
   <h/>
   <div class="container">
-    <balance :total="total"/>
+    <balance :total="+total"/>
     <IncomeExpense :income="+income" :expense="+expense"/>
     <TransactionList :transactions="transactions"/>
-    <AddTransaction/>
+    <AddTransaction @transactionSubmitted="handleCustomeEvent"/>
   </div>
 </template>
 
@@ -48,4 +48,10 @@ const expense=computed(()=>{
     return acc+transaction.amount;
   },0).toFixed(2);
 })
+
+const handleCustomeEvent =(transactionData)=>{
+  console.log(transactionData);
+  
+
+}
 </script>
