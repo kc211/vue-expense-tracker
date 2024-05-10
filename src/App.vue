@@ -3,12 +3,14 @@ import h from './components/h.vue'
 import Balance from './components/Balance.vue';
 import IncomeExpense from './components/IncomeExpense.vue';
 import TransactionList from './components/TransactionList.vue';
+import AddTransaction from './components/AddTransaction.vue';
 export default{
   components:{
     h,
     Balance,
     IncomeExpense,
-    TransactionList
+    TransactionList,
+    AddTransaction
   }
 }
 </script>
@@ -21,5 +23,6 @@ export default{
     <balance/>
     <IncomeExpense/>
     <TransactionList/>
+    <AddTransaction/>
   </div>
 </template>
